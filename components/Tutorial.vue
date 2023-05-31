@@ -31,6 +31,57 @@
 			</div>
 
 			<div class="row mb-3">
+				<label class="col-sm-2 col-form-label">Categorias</label>
+				<div class="col-sm-10">
+					<select class="form-control" v-model="category">
+						<option value="null">Todas</option>
+						<option v-for="category in categories" :value="category.id" :key="category.id">{{category.name}}</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="row mb-3">
+				<legend class="col-form-label col-sm-2 pt-0">Marca</legend>
+				<div class="col-sm-10">
+					<div class="mb-1">
+						<input type="radio" id="brandAll" value="" v-model="brand">
+						<label for="brandAll">Todas las marcas</label>
+					</div>
+					<div class="mb-1">
+						<input type="radio" id="brandKenner" value="134666" v-model="brand">
+						<label for="brandKenner">Kenner</label>
+					</div>
+					<div class="mb-1">
+						<input type="radio" id="brandFunko" value="415856" v-model="brand">
+						<label for="brandFunko">Funko</label>
+					</div>
+					<div class="mb-1">
+						<input type="radio" id="brandHasbro" value="2153571" v-model="brand">
+						<label for="brandHasbro">Tapimovil</label>
+					</div>
+
+					
+				</div>
+			</div>
+			<div class="row mb-3">
+				<legend class="col-form-label col-sm-2 pt-0">Ocultar dominios</legend>
+				<div class="col-sm-10">
+					<div class="mb-1">
+						<input type="checkbox" id="domBooks" value="MLA-BOOKS" v-model="hideDomainIds">
+						<label for="domBooks">MLA-BOOKS</label>
+					</div>
+					<div class="mb-1">
+						<input type="checkbox" id="domShirt" value="MLA-T_SHIRTS" v-model="hideDomainIds">
+						<label for="domShirt">MLA-T_SHIRTS</label>
+					</div>
+					<div class="mb-1">
+						<input type="checkbox" id="domPuzzles" value="MLA-PUZZLES" v-model="hideDomainIds">
+						<label for="domPuzzles">MLA-PUZZLES</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="row mb-3">
 				<legend class="col-form-label col-sm-2 pt-0">Estado del producto</legend>
 				<div class="col-sm-10">
 					<div class="mb-1">
@@ -50,24 +101,26 @@
 			<button @click="searchProducts" class="btn btn-primary btn-lg">Buscar</button>
 		</section>
 
+		<!-- RESULTADOS -->
 		<section class="mb-5" v-if="showResults">
 			<h2 class="h3">
 				Resultados: {{paging.total}} productos de <strong>"{{keyword}}" en condicion "{{conditionFilter}}" </strong>
 			</h2>
-			<ul class="d-none">
+			<ul class="">
 				<li>Total: {{paging.total}}</li>
 				<li>offset: {{offset}}</li>
 				<li>limit: {{paging.limit}}</li>
 				<li>totalItems: {{totalItems}}</li>
 				<li>totalPages: {{totalPages}}</li>
 			</ul>
+
 			<div class="mb-4 text-center">
 				<button @click="prevPage()" class="btn btn-secondary" :disabled="offset <= 0">Anterior</button>
 					<button @click="nextPage()" class="btn btn-secondary">Siguiente</button>
 				</div>
 
 				<div class="grid">
-					<article v-for="product in products" :key="product.id" class="card product">
+					<article v-for="product in products" :key="product.id" class="card product" :class="getClassForProduct(product)">
 
 						<img :src="product.thumbnail" class="card-img-top">
 
@@ -75,6 +128,8 @@
 							<h3 class="h6">{{ product.title }}</h3>
 							<p class="text-success fw-bold">$ {{product.price}} {{product.currency_id}}</p>
 							<p>Condition: {{product.condition}}</p>
+							<p>Domain {{product.domain_id}}</p>
+							<!-- <p>brand {{product.attributes}} </p> -->
 							<a :href="product.permalink" target="_blank" class="btn btn-secondary btn-sm w-100">Ver Producto</a>
 						</div>
 					</article>
@@ -85,9 +140,11 @@
 						<button @click="nextPage()" class="btn btn-secondary">Siguiente</button>
 					</div>
 				</section>
+
 		<!-- <pre class="card p-4">
 			{{response}}
 		</pre> -->
+
 	</div>
 </template>
 
@@ -112,6 +169,10 @@
 		aspect-ratio: 1/1;
 		object-fit: cover;
 	}
+	.product.disabled {
+		opacity: 0.5;
+		filter: grayscale(1);
+	}
 </style>
 
 <script>
@@ -121,8 +182,8 @@
 		data() {
 			return {
 				response: '',
-				keyword: '',
-				conditionFilter: 'used',
+				keyword: 'jurassic park',
+				conditionFilter: 'new',
 				products: [],
 				categories: [],
 				paging: '',
@@ -132,48 +193,69 @@
 				totalItems: 0,
 				totalPages: 0,
 				showResults: false,
+				brand: '',
+				category: null,
+				hideDomainIds: []
 			}
 		},
 		methods: {
+			getClassForProduct(product) {
+				const domainIdsToApplyClass = ['MLA-BOOKS', 'MLA-T_SHIRTS', 'z'];
+				if (domainIdsToApplyClass.includes(product.domain_id)) {
+					return 'disabled';
+				}
+				return '';
+			},
+
+			async showCategories() {
+				try {
+					const catResponse = await this.$axios.get('https://api.mercadolibre.com/sites/MLA/categories');
+					this.categories = catResponse.data;
+				} catch (error) {
+					console.error('Error al obtener los productos:', error);
+				}
+			},
 
 			async searchProducts() {
+
 				try {
-					//const offset = (this.currentPage - 1) * this.itemsPerPage;
+					const params = {
+						q: this.keyword,
+						limit: this.limit,
+						offset: this.offset,
+						condition: this.conditionFilter,
+					};
+
+					if (this.brand) {
+						params.brand = this.brand;
+					}
+
+					if (this.category) {
+						params.category = this.category;
+					}
 
 					const response = await this.$axios.get('https://api.mercadolibre.com/sites/MLA/search?q', {
-						params: {
-							q: this.keyword,
-							limit: this.limit,
-							offset: this.offset,
-							condition: this.conditionFilter,
-						}
+						params: params,
 					});
-
-					const catResponse = await this.$axios.get('https://api.mercadolibre.com/sites/MLA/categories');
-
-					//this.offset = 0;
-
-					this.categories = catResponse.data;
 					this.products = response.data.results;
 					this.paging = response.data.paging;
 					this.response = response.data;
 
 					this.totalItems = response.data.paging.total;
+					//this.brand = response.data.results.attributes;
 					this.showResults = true;
 					this.totalPages = Math.ceil(this.totalItems / this.limit);
-
-
 				} catch (error) {
 					console.error('Error al obtener los productos:', error);
 				}
+
+				// Filtra los productos para ocultar los que tienen el domain_id especificado
+				this.products = this.products.filter(product => !this.hideDomainIds.includes(product.domain_id));
 			},
 			nextPage(pageNumber) {
 				this.currentPage = pageNumber;
 				this.searchProducts();
 			},
-
-			
-
 			async nextPage() {
 				const newOffset = this.offset + this.limit;
 				if (newOffset < this.totalPages * this.limit) {
@@ -181,7 +263,6 @@
 					await this.searchProducts();
 				}
 			},
-
 			async prevPage() {
 				this.offset -= this.limit;
 				if (this.offset < 0) {
@@ -191,7 +272,7 @@
 			}
 		},
 		created() {
-		//this.searchProducts();
+			this.showCategories();
 		}
 	}
 </script>
