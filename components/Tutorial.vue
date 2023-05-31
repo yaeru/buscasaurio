@@ -102,7 +102,7 @@
 		data() {
 			return {
 				response: '',
-				keyword: 'marvel',
+				keyword: 'jurassic park',
 				conditionFilter: '',
 				products: [],
 				categories: [],
