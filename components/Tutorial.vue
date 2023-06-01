@@ -81,6 +81,20 @@
 			</div>
 
 			<div class="row mb-3">
+				<legend class="col-form-label col-sm-2 pt-0">Orden de precio</legend>
+				<div class="col-sm-10">
+					<div class="mb-1">
+						<input type="radio" id="price_asc" value="price_asc" v-model="sortPrice">
+						<label for="price_asc">price_asc</label>
+					</div>
+					<div class="mb-1">
+						<input type="radio" id="price_desc" value="price_desc" v-model="sortPrice">
+						<label for="price_desc">price_desc</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="row mb-3">
 				<legend class="col-form-label col-sm-2 pt-0">Ocultar dominios</legend>
 				<div class="col-sm-5">
 					<div class="mb-1">
@@ -186,9 +200,9 @@
 					</div>
 				</section>
 
-		<pre class="card p-4">
+		<!-- <pre class="card p-4">
 			{{response}}
-		</pre>
+		</pre> -->
 
 	</div>
 </template>
@@ -247,7 +261,8 @@
 				showResults: false,
 				brand: '',
 				category: null,
-				hideDomainIds: [],
+				hideDomainIds: ['MLA-T_SHIRTS', 'MLA-SWEATSHIRTS_AND_HOODIES', 'MLA-EYESHADOWS', 'MLA-EYEBROW_MAKEUP', 'MLA-LINGERIE_SETS', 'MLA-MASCARAS', 'MLA-MAKEUP_SETS', 'MLA-MAKEUP_BRUSHES', 'MLA-FALSE_NAIL', 'MLA-MAKEUP_ILLUMINATORS', 'MLA-LIPSTICKS', 'MLA-CONCEALERS',],
+				sortPrice: 'price_asc',
 				// hideDomainIds: ['MLA-T_SHIRTS', 'MLA-SWEATSHIRTS_AND_HOODIES', 'MLA-EYESHADOWS', 'MLA-EYEBROW_MAKEUP', 'MLA-LINGERIE_SETS', 'MLA-MASCARAS', 'MLA-MAKEUP_SETS', 'MLA-MAKEUP_BRUSHES', 'MLA-FALSE_NAIL', 'MLA-MAKEUP_ILLUMINATORS', 'MLA-LIPSTICKS', 'MLA-CONCEALERS',],
 			}
 		},
@@ -277,6 +292,7 @@
 						limit: this.limit,
 						offset: this.offset,
 						condition: this.conditionFilter,
+						sort: this.sortPrice,
 					};
 
 					if (this.brand) {
@@ -290,9 +306,10 @@
 					const response = await this.$axios.get('https://api.mercadolibre.com/sites/MLA/search?q', {
 						params: params,
 						headers: {
-							Authorization: 'Bearer V0G3zUcr57GoJMYFAWEtHvs52QQsKREU'
+							Authorization: 'Bearer token'
 						},
 					});
+
 
 					//'Authorization: Bearer $ACCESS_TOKEN' https://api.mercadolibre.com/sites/MLA/search?category=MLA1055
 					this.products = response.data.results;
