@@ -146,18 +146,23 @@
 			<h2 class="h3">
 				Resultados: {{paging.total}} productos de <strong>"{{keyword}}" en condicion "{{conditionFilter}}" </strong>
 			</h2>
-			<ul class="">
+			<ul class="d-non">
 				<li>Total: {{paging.total}}</li>
 				<li>offset: {{offset}}</li>
 				<li>limit: {{paging.limit}}</li>
+				<li>primary_results {{paging.primary_results}} </li>
 				<li>totalItems: {{totalItems}}</li>
 				<li>totalPages: {{totalPages}}</li>
 			</ul>
 
+			<ol class="d-none">
+				<li v-for="product in products" :key="product.id">{{ product.title }}</li>
+			</ol>
+
 			<div class="mb-4 text-center">
 				<button @click="prevPage()" class="btn btn-secondary" :disabled="offset <= 0">Anterior</button>
-					<button @click="nextPage()" class="btn btn-secondary">Siguiente</button>
-				</div>
+				<button @click="nextPage()" class="btn btn-secondary">Siguiente</button>
+			</div>
 
 				<div class="grid">
 					<article v-for="product in products" :key="product.id" class="card product" :class="getClassForProduct(product)">
@@ -181,9 +186,9 @@
 					</div>
 				</section>
 
-		<!-- <pre class="card p-4">
+		<pre class="card p-4">
 			{{response}}
-		</pre> -->
+		</pre>
 
 	</div>
 </template>
@@ -236,13 +241,14 @@
 				paging: '',
 				offset: 0,
 				currentPage: 1,
-				limit: 30,
+				limit: 50,
 				totalItems: 0,
 				totalPages: 0,
 				showResults: false,
 				brand: '',
 				category: null,
-				hideDomainIds: ['MLA-T_SHIRTS', 'MLA-SWEATSHIRTS_AND_HOODIES', 'MLA-EYESHADOWS', 'MLA-EYEBROW_MAKEUP', 'MLA-LINGERIE_SETS', 'MLA-MASCARAS', 'MLA-MAKEUP_SETS', 'MLA-MAKEUP_BRUSHES', 'MLA-FALSE_NAIL', 'MLA-MAKEUP_ILLUMINATORS', 'MLA-LIPSTICKS', 'MLA-CONCEALERS',]
+				hideDomainIds: [],
+				// hideDomainIds: ['MLA-T_SHIRTS', 'MLA-SWEATSHIRTS_AND_HOODIES', 'MLA-EYESHADOWS', 'MLA-EYEBROW_MAKEUP', 'MLA-LINGERIE_SETS', 'MLA-MASCARAS', 'MLA-MAKEUP_SETS', 'MLA-MAKEUP_BRUSHES', 'MLA-FALSE_NAIL', 'MLA-MAKEUP_ILLUMINATORS', 'MLA-LIPSTICKS', 'MLA-CONCEALERS',],
 			}
 		},
 		methods: {
@@ -283,7 +289,12 @@
 
 					const response = await this.$axios.get('https://api.mercadolibre.com/sites/MLA/search?q', {
 						params: params,
+						headers: {
+							Authorization: 'Bearer V0G3zUcr57GoJMYFAWEtHvs52QQsKREU'
+						},
 					});
+
+					//'Authorization: Bearer $ACCESS_TOKEN' https://api.mercadolibre.com/sites/MLA/search?category=MLA1055
 					this.products = response.data.results;
 					this.paging = response.data.paging;
 					this.response = response.data;
