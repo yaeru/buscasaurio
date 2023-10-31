@@ -1,4 +1,5 @@
-# buscasaurio
+# Buscasaurio
+Buscá productos en Mercado Libre sin publicidades molestas. Orientado a tus búsquedas Jurásicas.
 
 ## Build Setup
 
