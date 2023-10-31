@@ -20,5 +20,8 @@ export default async (req, context) => {
 	.then(response => response.json())
 	.catch(error => console.log('error', error));
 
-	return new Response(tokenResponse);
+	return {
+        statusCode: 200,
+        body: JSON.stringify({ tokenResponse })
+    };
 };
