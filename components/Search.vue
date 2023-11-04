@@ -164,7 +164,7 @@
 
 			<!-- RESULTADOS -->
 			<main id="main" class="col-lg-8 col-xl-9 pt-3">
-				<div class="card pb-3">
+				<div class="card pb-3" v-if="showResults">
 					<section id="results-title" class="p-3 sticky-md-top d-md-flex align-items-center justify-content-between">
 						<h3 class="h5 m-0">
 							{{paging.total}} productos para <strong>"{{keyword}}"</strong>
@@ -176,7 +176,7 @@
 						</nav>
 					</section>
 
-					<section id="results-grid" v-if="showResults" class="grid pt-3 px-3">
+					<section id="results-grid"  class="grid pt-3 px-3">
 						<article v-for="product in products" :key="product.id" class="card product" :class="getClassForProduct(product)">
 							<span class="position-absolute badge" v-bind:class="{'bg-success': product.condition === 'new', 'bg-danger': product.condition === 'used'}">
 								{{ product.condition }}
@@ -210,17 +210,24 @@
 		--bs-border-radius: 15px !important;
 	}
 	body {
-		height: 100vh;
-		overflow: hidden;
 		background-color: #f5f5f5 !important;
-/*		background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(238,226,241,1) 100%);*/
-
+		/*background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(238,226,241,1) 100%);*/
+	}
+	@media only screen and (min-width: 981apx) {
+		body {
+			height: 100vh;
+			overflow: hidden;
+		}
 	}
 	#aside {}
 	#main {}
 	#main > .card {
-		height: calc(100vh - 2rem);
-		overflow-y: scroll;
+	}
+	@media only screen and (min-width: 981apx) {
+		#main > .card {
+			height: calc(100vh - 2rem);
+			overflow-y: scroll;
+		}
 	}
 	#results-grid {}
 	#results-title {
@@ -228,7 +235,7 @@
 		backdrop-filter: blur(12px);
 		border-bottom: solid 1px var(--grey);
 	}
-	@media (max-width: 980px) {
+	@media only screen and (max-width: 980px) {
 		#results-title {
 			text-align: center;
 		}
@@ -239,7 +246,7 @@
 	.sticky-md-top {
 		top: 0 !important;
 	}
-	
+
 	.form-label {
 		font-weight: 500;
 		font-size: 1rem;
@@ -262,56 +269,56 @@
 		}
 	}
 
-	/* Product */
-	.product {
-		overflow: hidden;
-	}
-	.product > figure {
-		margin-bottom: 0;
-		overflow: hidden;
-		border-bottom: solid 1px var(--grey);
-	}
-	.product .badge {
-		top: 10px;
-		right: 10px;
-		font-size: 1rem;
-		font-weight: 500;
-	}
-	.product .card-img-top {
-		aspect-ratio: 1/1;
-		object-fit: cover;	
-		transition: all 0.3s ease;
-	}
-	.product:hover .card-img-top {
-		transform: scale(1.05);
-	}
-	.product .card-body {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-	}
-	.product.disabled {
-		opacity: 0.5;
-		filter: grayscale(1);
-	}
-	.line-clamp {
-		display: -webkit-box;
-		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 2;
-		overflow: hidden;
-	}
+/* Product */
+.product {
+	overflow: hidden;
+}
+.product > figure {
+	margin-bottom: 0;
+	overflow: hidden;
+	border-bottom: solid 1px var(--grey);
+}
+.product .badge {
+	top: 10px;
+	right: 10px;
+	font-size: 1rem;
+	font-weight: 500;
+}
+.product .card-img-top {
+	aspect-ratio: 1/1;
+	object-fit: cover;	
+	transition: all 0.3s ease;
+}
+.product:hover .card-img-top {
+	transform: scale(1.05);
+}
+.product .card-body {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.product.disabled {
+	opacity: 0.5;
+	filter: grayscale(1);
+}
+.line-clamp {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+}
 
-	#dominios label {
-		font-size: 0.8rem;
-	}
-	
-	/* Reset BS */
-	.card {
-		border-color: var(--grey) !important;
-	}
-	.btn {
-		border-radius: 100px !important;
-	}
+#dominios label {
+	font-size: 0.8rem;
+}
+
+/* Reset BS */
+.card {
+	border-color: var(--grey) !important;
+}
+.btn {
+	border-radius: 100px !important;
+}
 </style>
 
 <script>
@@ -323,7 +330,7 @@
 					offset: 0,
 					limit: 50
 				},
-				refreshToken: process.env.VUE_REFRESH_TOKEN,
+				refreshToken: 'TG-6501f3b616cdca00012c38b2-58916123',
 				response: '',
 				keyword: 'jurassic park',
 				conditionFilter: '',
@@ -369,15 +376,14 @@
 
 			async searchProducts() {
 				try {
-
 					var myHeaders = new Headers();
 					myHeaders.append("accept", "application/json");
 					myHeaders.append("content-type", "application/x-www-form-urlencoded");
 
 					var urlencoded = new URLSearchParams();
 					urlencoded.append("grant_type", "refresh_token");
-					urlencoded.append("client_id", process.env.VUE_CLIENT_ID);
-					urlencoded.append("client_secret", process.env.VUE_CLIENT_SECRET);
+					urlencoded.append("client_id", "3820820639250625");
+					urlencoded.append("client_secret", "V0G3zUcr57GoJMYFAWEtHvs52QQsKREU");
 					urlencoded.append("refresh_token", this.refreshToken);
 
 					var requestOptions = {
@@ -388,11 +394,9 @@
 					};
 
 					var tokenResponse = await fetch("https://api.mercadolibre.com/oauth/token", requestOptions)
+					//var tokenResponse = await fetch("https://buscasaurio.netlify.app/.netlify/functions/hello")
 					.then(response => response.json())
 					.catch(error => console.log('error', error));
-
-					console.log(tokenResponse["access_token"]);
-					console.log(tokenResponse["refresh_token"]);
 					this.refreshToken = tokenResponse["refresh_token"];
 					const params = {
 						q: this.keyword,
@@ -413,13 +417,16 @@
 						},
 					});
 
+					//'Authorization: Bearer $ACCESS_TOKEN' https://api.mercadolibre.com/sites/MLA/search?category=MLA1055
 					this.products = response.data.results;
 					this.paging = response.data.paging;
 					this.response = response.data;
 
 					this.totalItems = response.data.paging.total;
+					//this.brand = response.data.results.attributes;
 					this.showResults = true;
 					this.totalPages = Math.ceil(this.totalItems / this.paginationData.limit);
+					//this.calculatedOffset = return (this.currentPage - 1) * this.paginationData.limit;
 				} catch (error) {
 					console.error('Error al obtener los productos:', error);
 				}

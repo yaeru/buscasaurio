@@ -1,5 +1,4 @@
 export default async (req, context) => {
-	
 	if (event.httpMethod === 'OPTIONS') {
 		return {
 			statusCode: 200,
@@ -29,13 +28,11 @@ export default async (req, context) => {
 	.then(response => response.json())
 	.catch(error => console.log('error', error));
 
-	return new Response(JSON.stringify({ tokenResponse }),
-	{
+	return new Response(JSON.stringify({ tokenResponse }), {
 		headers = {
 			'Access-Control-Allow-Origin': '*',
 			'Access-Control-Allow-Headers': '*',
 			'Access-Control-Allow-Methods': '*',
 		}
-	}
-	);
+	});
 };
