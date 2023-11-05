@@ -5,8 +5,7 @@
 			<!-- BUSCADOR -->
 			<aside id="aside" class="col-lg-4 col-xl-3 pt-3">
 				<div class="sticky-md-top">
-					<div class="mb-3 card p-3">
-						
+					<div id="search-card" class="mb-3 card p-3">
 						<Logo />
 
 						<div class="mb-3">
@@ -28,33 +27,7 @@
 
 						<div class="mb-3">
 							<div class="row">
-								<!-- Brand -->
-								<!-- <div class="col-md-4">
-									<legend class="form-label pt-0">Marca</legend>
-									<div>
-										<div class="mb-1">
-											<input type="radio" id="brandAll" value="" v-model="brand">
-											<label for="brandAll">Todas</label>
-										</div>
-										<div class="mb-1">
-											<input type="radio" id="brandKenner" value="134666" v-model="brand">
-											<label for="brandKenner">Kenner</label>
-										</div>
-										<div class="mb-1">
-											<input type="radio" id="brandHasbro" value="1006823" v-model="brand">
-											<label for="brandHasbro">Hasbro</label>
-										</div>
-										<div class="mb-1">
-											<input type="radio" id="brandMattel" value="1006861" v-model="brand">
-											<label for="brandMattel">Mattel</label>
-										</div>
-										<div class="mb-1">
-											<input type="radio" id="brandFunko" value="415856" v-model="brand">
-											<label for="brandFunko">Funko</label>
-										</div>
-									</div>
-								</div> -->
-
+								<Brand />
 								<!-- Condition -->
 								<div class="col-6">
 									<legend class="form-label pt-0">Condición</legend>
@@ -92,7 +65,7 @@
 						</div>
 
 						<p>
-							<a class="btn  btn-outline-secondary btn-sm" data-bs-toggle="collapse" href="#collapseExtras" role="button" aria-expanded="false" aria-controls="collapseExtras">
+							<a class="btn btn-outline-secondary btn-sm" data-bs-toggle="collapse" href="#collapseExtras" role="button" aria-expanded="false" aria-controls="collapseExtras">
 								Opciones extra
 							</a>
 						</p>
@@ -153,10 +126,10 @@
 								</div>
 							</div>
 						</div>
-
-						<button @click="searchProducts" class="btn btn-primary text-uppercase">Buscar</button>
+						<div class="d-grid gap-2">
+							<button @click="searchProducts" :disabled="!keyword" class="btn btn-primary btn-block text-uppercase">Buscar</button>
+						</div>
 					</div>
-
 					<Credits />
 				</div>
 			</aside>
@@ -169,9 +142,9 @@
 							{{paging.total}} productos para <strong>"{{keyword}}"</strong>
 						</h3>
 						<nav class="text-center">
-							<button @click="previousPage" :disabled="currentPage === 1" class="btn btn-secondary btn-sm">Anterior</button>
+							<a href="#results-card" @click="previousPage" :disabled="currentPage === 1" class="btn btn-secondary btn-sm">Anterior</a>
 							<span>Página {{ currentPage }} de {{ totalPages }}</span>
-							<button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-primary btn-sm">Siguiente</button>
+							<a href="#results-card" @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-primary btn-sm">Siguiente</a>
 						</nav>
 					</section>
 
@@ -211,10 +184,13 @@
 		--bs-border-radius: 15px !important;
 		--bs-border-radius-s: 10px !important;
 		--bs-border-radius-l: 20px !important;
+		--card-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 	}
 	body {
 		background-color: #f5f5f5 !important;
-		/*background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(238,226,241,1) 100%);*/
+		/*background: linear-gradient(180deg, red 0%, yellow 100%);
+		background-repeat: no-repeat;
+		background-attachment: fixed;*/
 	}
 	@media only screen and (min-width: 981apx) {
 		body {
@@ -256,6 +232,9 @@
 	}
 	
 	/* FORM */
+	#search-card {
+		box-shadow: var(--card-shadow);
+	}
 	.form-control {
 		border-radius: var(bs-border-radius-l) !important;
 	}
@@ -265,11 +244,15 @@
 	}
 
 	/* RESULTS */
+	#results-card {
+		box-shadow: var(--card-shadow);
+	}
 	@media only screen and (max-width: 980px) {
 		#results-card {
 			margin-bottom: 6rem !important;
 			border-width: 0;
 			background-color: transparent;
+			box-shadow: none;
 		}
 		#results-grid {
 			padding: 0 !important;
@@ -277,7 +260,7 @@
 		}
 	}
 	#results-title {
-		background-color: rgba(255, 255, 255, 0.85);
+		background-color: rgba(255, 255, 255, 0.80);
 		backdrop-filter: blur(12px);
 		border-bottom: solid 1px var(--grey);
 		border-radius: var(--bs-border-radius) var(--bs-border-radius) 0 0;
@@ -307,7 +290,7 @@
 	}
 	@media only screen and (max-width: 980px) {
 		.card.product {
-			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+			box-shadow: var(--card-shadow);
 		}
 	}
 	.product > figure {
@@ -320,6 +303,7 @@
 		right: 10px;
 		font-size: 1rem;
 		font-weight: 500;
+		z-index: 99;
 	}
 	.product .card-img-top {
 		aspect-ratio: 1/1;
@@ -351,12 +335,12 @@
 		overflow: hidden;
 	}
 
-/* Reset BS */
-.card {
-}
-.btn {
-	border-radius: 100px !important;
-}
+	/* Reset BS */
+	.card {
+	}
+	.btn {
+		border-radius: 100px !important;
+	}
 </style>
 
 <script>
@@ -370,7 +354,7 @@
 				},
 				refreshToken: 'TG-6501f3b616cdca00012c38b2-58916123',
 				response: '',
-				keyword: '',
+				keyword: 'jurassic park',
 				conditionFilter: '',
 				products: [],
 				categories: [],
