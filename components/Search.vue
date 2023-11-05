@@ -354,7 +354,7 @@
 				},
 				refreshToken: 'TG-6501f3b616cdca00012c38b2-58916123',
 				response: '',
-				keyword: 'jurassic park',
+				keyword: '',
 				conditionFilter: '',
 				products: [],
 				categories: [],
