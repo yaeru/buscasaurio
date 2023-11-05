@@ -15,7 +15,8 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: 'Buscá productos en Mercado Libre sin publicidades molestas. Orientado a tus búsquedas Jurásicas' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { name: 'format-detection', content: 'telephone=no' },
+      { hid: 'og:image', property: 'og:image', content: 'https://samaycomic.com/wp-content/uploads/2023/10/share-web.jpg' }      
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: 'favicon.png' }
