@@ -10,17 +10,17 @@
 						<Logo />
 
 						<div class="mb-3">
-							<label class="form-label">Palabra clave</label>
+							<label class="form-label" for="key-word">Palabra clave</label>
 							<div>
-								<input type="text" v-model="keyword" required placeholder="Ingresa la palabra clave" class="form-control" @keyup.enter="searchProducts">
+								<input id="key-word" type="text" v-model="keyword" required placeholder="Ingresa la palabra clave" class="form-control" @keyup.enter="searchProducts">
 							</div>
 						</div>
 
 						<div class="mb-3">
-							<label class="form-label">Categorias</label>
+							<label class="form-label d-none" for="categories">Categorias</label>
 							<div>
-								<select class="form-control" v-model="category">
-									<option value="null" selected>Todas</option>
+								<select id="categories" aria-label="categories" class="form-control" v-model="category">
+									<option value="null" selected>Todas las Categorias</option>
 									<option v-for="category in categories" :value="category.id" :key="category.id">{{category.name}}</option>
 								</select>
 							</div>
@@ -56,35 +56,35 @@
 								</div> -->
 
 								<!-- Condition -->
-								<div class="col-md-6">
+								<div class="col-6">
 									<legend class="form-label pt-0">Condición</legend>
 									<div>
 										<div class="mb-1">
 											<input type="radio" id="allConditions" value="" v-model="conditionFilter">
-											<label for="allConditions">Todos</label>
+											<label for="allConditions" class="small">Todos</label>
 										</div>
 										<div class="mb-1">
 											<input type="radio" id="newCondition" value="new" v-model="conditionFilter">
-											<label for="newCondition">Nuevo</label>
+											<label for="newCondition" class="small">Nuevo</label>
 										</div>
 										<div class="mb-1">
 											<input type="radio" id="usedCondition" value="used" v-model="conditionFilter">
-											<label for="usedCondition">Usado</label>
+											<label for="usedCondition" class="small">Usado</label>
 										</div>
 									</div>
 								</div>
 
 								<!-- Order -->
-								<div class="col-md-6">
+								<div class="col-6">
 									<legend class="form-label pt-0">Orden de precio</legend>
 									<div>
 										<div class="mb-1">
 											<input type="radio" id="price_asc" value="price_asc" v-model="sortPrice">
-											<label for="price_asc">Menor precio</label>
+											<label for="price_asc" class="small">Menor precio</label>
 										</div>
 										<div class="mb-1">
 											<input type="radio" id="price_desc" value="price_desc" v-model="sortPrice">
-											<label for="price_desc">Mayor precio</label>
+											<label for="price_desc" class="small">Mayor precio</label>
 										</div>
 									</div>
 								</div>
@@ -92,70 +92,69 @@
 						</div>
 
 						<p>
-							<a class="btn  btn-outline-secondary btn-sm" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+							<a class="btn  btn-outline-secondary btn-sm" data-bs-toggle="collapse" href="#collapseExtras" role="button" aria-expanded="false" aria-controls="collapseExtras">
 								Opciones extra
 							</a>
 						</p>
-						<div class="collapse" id="collapseExample">
+						<div class="collapse" id="collapseExtras">
 							<div id="dominios" class="row mb-3">
 								<legend class="form-label pt-0">Ocultar dominios</legend>
 
 								<div class="col-sm-6 text-lowercase">
 									<div class="mb-1">
 										<input type="checkbox" id="domBooks" value="MLA-BOOKS" v-model="hideDomainIds">
-										<label for="domBooks">MLA-BOOKS</label>
+										<label for="domBooks" class="small">MLA-BOOKS</label>
 									</div>
 									<div class="mb-1">
 										<input type="checkbox" id="domShirt" value="MLA-T_SHIRTS" v-model="hideDomainIds">
-										<label for="domShirt">MLA-T_SHIRTS</label>
+										<label for="domShirt" class="small">MLA-T_SHIRTS</label>
 									</div>
 									<div class="mb-1">
 										<input type="checkbox" id="domPuzzles" value="MLA-PUZZLES" v-model="hideDomainIds">
-										<label for="domPuzzles">MLA-PUZZLES</label>
+										<label for="domPuzzles" class="small">MLA-PUZZLES</label>
 									</div>
 									<div class="mb-1">
 										<input type="checkbox" id="domHoodies" value="MLA-SWEATSHIRTS_AND_HOODIES" v-model="hideDomainIds">
-										<label for="domHoodies">MLA-SWEATSHIRTS_AND_HOODIES</label>
+										<label for="domHoodies" class="small">MLA-SWEATSHIRTS_AND_HOODIES</label>
 									</div>
 									<div class="mb-1">
 										<input type="checkbox" id="domMovies" value="MLA-MOVIES" v-model="hideDomainIds">
-										<label for="domMovies">MLA-MOVIES</label>
+										<label for="domMovies" class="small">MLA-MOVIES</label>
 									</div>
 									<div class="mb-1">
 										<input type="checkbox" id="domHats" value="MLA-HATS_AND_CAPS" v-model="hideDomainIds">
-										<label for="domHats">MLA-HATS_AND_CAPS</label>
+										<label for="domHats" class="small">MLA-HATS_AND_CAPS</label>
 									</div>
 								</div>
 								<div class="col-sm-6 text-lowercase">
 									<div class="mb-1">
 										<input type="checkbox" id="domEyes" value="MLA-EYESHADOWS" v-model="hideDomainIds">
-										<label for="domEyes">MLA-EYESHADOWS</label>
+										<label for="domEyes" class="small">MLA-EYESHADOWS</label>
 									</div>
 									<div class="mb-1">
 										<input type="checkbox" id="domMakeup" value="MLA-EYEBROW_MAKEUP" v-model="hideDomainIds">
-										<label for="domMakeup">MLA-EYEBROW_MAKEUP</label>
+										<label for="domMakeup" class="small">MLA-EYEBROW_MAKEUP</label>
 									</div>
 
 									<div class="mb-1">
 										<input type="checkbox" id="LINGERIE_SETS" value="MLA-LINGERIE_SETS" v-model="hideDomainIds">
-										<label for="LINGERIE_SETS">MLA-LINGERIE_SETS</label>
+										<label for="LINGERIE_SETS" class="small">MLA-LINGERIE_SETS</label>
 									</div>
 
 									<div class="mb-1">
 										<input type="checkbox" id="MASCARAS" value="MLA-MASCARAS" v-model="hideDomainIds">
-										<label for="MASCARAS">MLA-MASCARAS</label>
+										<label for="MASCARAS" class="small">MLA-MASCARAS</label>
 									</div>
 
 									<div class="mb-1">
 										<input type="checkbox" id="MAKEUP_SETS" value="MLA-MAKEUP_SETS" v-model="hideDomainIds">
-										<label for="MAKEUP_SETS">MLA-MAKEUP_SETS</label>
+										<label for="MAKEUP_SETS" class="small">MLA-MAKEUP_SETS</label>
 									</div>
 								</div>
 							</div>
 						</div>
 
-
-						<button @click="searchProducts" class="btn btn-primary btn-lg">Buscar</button>
+						<button @click="searchProducts" class="btn btn-primary text-uppercase">Buscar</button>
 					</div>
 
 					<Credits />
@@ -164,7 +163,7 @@
 
 			<!-- RESULTADOS -->
 			<main id="main" class="col-lg-8 col-xl-9 pt-3">
-				<div class="card pb-3" v-if="showResults">
+				<div id="results-card" class="card pb-3 mb-3" v-if="showResults">
 					<section id="results-title" class="p-3 sticky-md-top d-md-flex align-items-center justify-content-between">
 						<h3 class="h5 m-0">
 							{{paging.total}} productos para <strong>"{{keyword}}"</strong>
@@ -176,7 +175,7 @@
 						</nav>
 					</section>
 
-					<section id="results-grid"  class="grid pt-3 px-3">
+					<section id="results-grid"  class="grid p-3 pb-0">
 						<article v-for="product in products" :key="product.id" class="card product" :class="getClassForProduct(product)">
 							<span class="position-absolute badge" v-bind:class="{'bg-success': product.condition === 'new', 'bg-danger': product.condition === 'used'}">
 								{{ product.condition }}
@@ -184,7 +183,7 @@
 
 							<figure>
 								<a :href="product.permalink" target="_blank">
-									<img :src="product.thumbnail" class="card-img-top">
+									<img :src="product.thumbnail" class="card-img-top" :alt="product.title" width="200" height="200">
 								</a>
 							</figure>
 
@@ -207,7 +206,10 @@
 <style type="text/css">
 	:root {
 		--grey: #e7e7e7;
+		--bs-border-color-translucent: rgba(0, 0, 0, 0.1) !important;
 		--bs-border-radius: 15px !important;
+		--bs-border-radius-s: 10px !important;
+		--bs-border-radius-l: 20px !important;
 	}
 	body {
 		background-color: #f5f5f5 !important;
@@ -223,34 +225,17 @@
 	#main {}
 	#main > .card {
 	}
+	.sticky-md-top {
+		top: 0 !important;
+	}
 	@media only screen and (min-width: 981apx) {
 		#main > .card {
 			height: calc(100vh - 2rem);
 			overflow-y: scroll;
 		}
 	}
-	#results-grid {}
-	#results-title {
-		background-color: rgba(255, 255, 255, 0.85);
-		backdrop-filter: blur(12px);
-		border-bottom: solid 1px var(--grey);
-	}
-	@media only screen and (max-width: 980px) {
-		#results-title {
-			text-align: center;
-		}
-		#results-title h3 {
-			margin-bottom: 1rem !important;
-		}
-	}
-	.sticky-md-top {
-		top: 0 !important;
-	}
-
-	.form-label {
-		font-weight: 500;
-		font-size: 1rem;
-	}
+	
+	/* BASE */
 	.grid {
 		display: grid;
 		gap: 0.5rem;
@@ -268,53 +253,105 @@
 			grid-template-columns: repeat(5, 1fr);
 		}
 	}
+	
+	/* FORM */
+	.form-control {
+		border-radius: var(bs-border-radius-l) !important;
+	}
+	.form-label {
+		font-weight: 500;
+		font-size: 1rem;
+	}
 
-/* Product */
-.product {
-	overflow: hidden;
-}
-.product > figure {
-	margin-bottom: 0;
-	overflow: hidden;
-	border-bottom: solid 1px var(--grey);
-}
-.product .badge {
-	top: 10px;
-	right: 10px;
-	font-size: 1rem;
-	font-weight: 500;
-}
-.product .card-img-top {
-	aspect-ratio: 1/1;
-	object-fit: cover;	
-	transition: all 0.3s ease;
-}
-.product:hover .card-img-top {
-	transform: scale(1.05);
-}
-.product .card-body {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-}
-.product.disabled {
-	opacity: 0.5;
-	filter: grayscale(1);
-}
-.line-clamp {
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;
-	overflow: hidden;
-}
+	/* RESULTS */
+	@media only screen and (max-width: 980px) {
+		#results-card {
+			margin-bottom: 6rem !important;
+			border-width: 0;
+			background-color: transparent;
+		}
+		#results-grid {
+			padding: 0 !important;
+			padding-top: 1rem !important;
+		}
+	}
+	#results-title {
+		background-color: rgba(255, 255, 255, 0.85);
+		backdrop-filter: blur(12px);
+		border-bottom: solid 1px var(--grey);
+		border-radius: var(--bs-border-radius) var(--bs-border-radius) 0 0;
+	}
+	@media only screen and (max-width: 980px) {
+		#results-title {
+			text-align: center;
+		}
+		#results-title.sticky-md-top {
+			position: fixed;
+			z-index: 99;
+			width: 100%;
+			top: unset !important;
+			left: 0;
+			bottom: 0;
+		} 
+		#results-title .h5 {
+			margin-bottom: 0.5rem !important;
+			font-size: 1rem;
+		}
+	}
 
-#dominios label {
-	font-size: 0.8rem;
-}
+	/* PRODUCT */
+	.card.product {
+		overflow: hidden;
+		border-radius: var(--bs-border-radius-s);
+	}
+	@media only screen and (max-width: 980px) {
+		.card.product {
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+		}
+	}
+	.product > figure {
+		margin-bottom: 0;
+		overflow: hidden;
+		border-bottom: solid 1px var(--grey);
+	}
+	.product .badge {
+		top: 10px;
+		right: 10px;
+		font-size: 1rem;
+		font-weight: 500;
+	}
+	.product .card-img-top {
+		aspect-ratio: 1/1;
+		object-fit: cover;	
+		transition: all 0.3s ease;
+		border-radius: var(--bs-border-radius-s) var(--bs-border-radius-s) 0 0 !important;
+	}
+	.product:hover .card-img-top {
+		transform: scale(1.05);
+	}
+	.product .card-body {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+	@media only screen and (max-width: 980px) {
+		.product .card-body {
+			padding: 0.7rem;
+		}
+	}
+	.product.disabled {
+		opacity: 0.5;
+		filter: grayscale(1);
+	}
+	.line-clamp {
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		overflow: hidden;
+	}
 
 /* Reset BS */
 .card {
-	border-color: var(--grey) !important;
 }
 .btn {
 	border-radius: 100px !important;
