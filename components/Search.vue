@@ -183,7 +183,8 @@
 
 							<figure>
 								<a :href="product.permalink" target="_blank">
-									<img :src="product.thumbnail" class="card-img-top" :alt="product.title" width="200" height="200">
+									<!-- <img :src="product.thumbnail" class="card-img-top" :alt="product.title" width="200" height="200"> -->
+									<img :src="'https://http2.mlstatic.com/D_NQ_NP_' + product.thumbnail_id + '-O.webp'" class="card-img-top" :alt="product.title" width="200" height="200">
 								</a>
 							</figure>
 
@@ -225,8 +226,8 @@
 	#main {}
 	#main > .card {
 	}
-	.sticky-md-top {
-		top: 0 !important;
+	#aside > .sticky-md-top {
+		top: 1rem !important;
 	}
 	@media only screen and (min-width: 981apx) {
 		#main > .card {
