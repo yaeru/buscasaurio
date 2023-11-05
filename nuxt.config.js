@@ -9,7 +9,7 @@ export default {
   head: {
     title: 'Buscasaurio, para tus compras Jurásicas.',
     htmlAttrs: {
-      lang: 'es'
+      lang: 'es_ar'
     },
     meta: [
       { charset: 'utf-8' },
@@ -18,7 +18,7 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }
+      { rel: 'icon', type: 'image/x-icon', href: 'favicon.png' }
     ]
   },
 

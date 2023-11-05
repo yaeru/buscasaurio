@@ -323,7 +323,7 @@
 	}
 	.product .card-img-top {
 		aspect-ratio: 1/1;
-		object-fit: cover;	
+		object-fit: contain;	
 		transition: all 0.3s ease;
 		border-radius: var(--bs-border-radius-s) var(--bs-border-radius-s) 0 0 !important;
 	}
@@ -370,7 +370,7 @@
 				},
 				refreshToken: 'TG-6501f3b616cdca00012c38b2-58916123',
 				response: '',
-				keyword: 'jurassic park',
+				keyword: '',
 				conditionFilter: '',
 				products: [],
 				categories: [],
