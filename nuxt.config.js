@@ -16,7 +16,7 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: 'Buscá productos en Mercado Libre sin publicidades molestas. Orientado a tus búsquedas de dinosaurios.' },
       { name: 'format-detection', content: 'telephone=no' },
-      { hid: 'og:image', property: 'og:image', content: 'share-web.jpg' }      
+      { hid: 'og:image', property: 'og:image', content: 'https://yaeru.github.io/buscasaurio/share-web.jpg' }      
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: 'favicon.png' }
