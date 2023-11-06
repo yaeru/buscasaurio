@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[6],{295:function(n,t,e){"use strict";e.r(t);var c=e(47),component=Object(c.a)({},(function(){return(0,this._self._c)("h1",{staticClass:"mb-4 h2 text-center"},[this._v("\n  🦖 Buscasaurio\n")])}),[],!1,null,null,null);t.default=component.exports}}]);
