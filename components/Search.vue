@@ -303,7 +303,7 @@
 		right: 10px;
 		font-size: 1rem;
 		font-weight: 500;
-		z-index: 99;
+		z-index: 9;
 	}
 	.product .card-img-top {
 		aspect-ratio: 1/1;
